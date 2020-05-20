@@ -1,0 +1,9 @@
+C:\Users\מור טואיטו\source\repos\c-charp-ex2\B20_Ex02_02\bin\Debug\B20_Ex02_02.exe.config
+C:\Users\מור טואיטו\source\repos\c-charp-ex2\B20_Ex02_02\bin\Debug\B20_Ex02_02.exe
+C:\Users\מור טואיטו\source\repos\c-charp-ex2\B20_Ex02_02\bin\Debug\B20_Ex02_02.pdb
+C:\Users\מור טואיטו\source\repos\c-charp-ex2\B20_Ex02_02\bin\Debug\Ex02.ConsoleUtils.dll
+C:\Users\מור טואיטו\source\repos\c-charp-ex2\B20_Ex02_02\obj\Debug\B20_Ex02_02.csprojAssemblyReference.cache
+C:\Users\מור טואיטו\source\repos\c-charp-ex2\B20_Ex02_02\obj\Debug\B20_Ex02_02.csproj.CoreCompileInputs.cache
+C:\Users\מור טואיטו\source\repos\c-charp-ex2\B20_Ex02_02\obj\Debug\B20_Ex02_02.csproj.CopyComplete
+C:\Users\מור טואיטו\source\repos\c-charp-ex2\B20_Ex02_02\obj\Debug\B20_Ex02_02.exe
+C:\Users\מור טואיטו\source\repos\c-charp-ex2\B20_Ex02_02\obj\Debug\B20_Ex02_02.pdb
