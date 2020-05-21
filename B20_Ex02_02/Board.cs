@@ -41,15 +41,15 @@ namespace B20_Ex02_02
             Console.WriteLine();
 
             Random rnd = new Random();
-            
+            char randomChar = (char)rnd.Next('A', 'Z');
 
             for (int i = 0; i <colw; i++)
             {
                 Console.Write("{0}", i + 1);
                 for (int j = 0; j < row; j++)
                 {
-                    char randomChar = (char)rnd.Next('a', 'z');
-                    Console.Write("  [{0}]   ",randomChar);
+                    
+                    Console.Write("  [{0}]   ", randomChar);
                     
                 }
                 Console.WriteLine();
