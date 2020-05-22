@@ -7,3 +7,10 @@ C:\Users\מור טואיטו\source\repos\c-charp-ex2\B20_Ex02_02\obj\Debug\B20_
 C:\Users\מור טואיטו\source\repos\c-charp-ex2\B20_Ex02_02\obj\Debug\B20_Ex02_02.csproj.CopyComplete
 C:\Users\מור טואיטו\source\repos\c-charp-ex2\B20_Ex02_02\obj\Debug\B20_Ex02_02.exe
 C:\Users\מור טואיטו\source\repos\c-charp-ex2\B20_Ex02_02\obj\Debug\B20_Ex02_02.pdb
+C:\Users\ortal\OneDrive\מסמכים\GitHub\c-charp-ex2\B20_Ex02_02\bin\Debug\B20_Ex02_02.exe.config
+C:\Users\ortal\OneDrive\מסמכים\GitHub\c-charp-ex2\B20_Ex02_02\bin\Debug\B20_Ex02_02.exe
+C:\Users\ortal\OneDrive\מסמכים\GitHub\c-charp-ex2\B20_Ex02_02\bin\Debug\B20_Ex02_02.pdb
+C:\Users\ortal\OneDrive\מסמכים\GitHub\c-charp-ex2\B20_Ex02_02\obj\Debug\B20_Ex02_02.csprojResolveAssemblyReference.cache
+C:\Users\ortal\OneDrive\מסמכים\GitHub\c-charp-ex2\B20_Ex02_02\obj\Debug\B20_Ex02_02.csproj.CoreCompileInputs.cache
+C:\Users\ortal\OneDrive\מסמכים\GitHub\c-charp-ex2\B20_Ex02_02\obj\Debug\B20_Ex02_02.exe
+C:\Users\ortal\OneDrive\מסמכים\GitHub\c-charp-ex2\B20_Ex02_02\obj\Debug\B20_Ex02_02.pdb
