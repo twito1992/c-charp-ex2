@@ -11,6 +11,8 @@ namespace B20_Ex02_02
         private int m_Player2Count = 0;//player 2 can move
         private int m_EmptyCount = 0;///empry move
         private int m_Size = 0;
+        private int m_Row = 0;
+        private int m_Colow = 0;
         private char[,] m_Board = null;
         static Random m_random = new Random();
         private List<int> m_validMovesPlayer1 = null;//vaild move player 1
@@ -67,78 +69,183 @@ namespace B20_Ex02_02
             }
         }
 
-        public Board(int i_Size)
+        public int Row
         {
-            m_Size = i_Size;
-            m_Board = new char[m_Size, m_Size];
+            get
+            {
+                return m_Row;
+            }
+
+            set
+            {
+                m_Row = value;
+            }
+        }
+        public int Colow
+        {
+            get
+            {
+                return m_Colow;
+            }
+
+            set
+            {
+                m_Colow = value;
+            }
+        }
+
+        public Board(int row,int colow)
+        {
+            m_Row = row;
+            m_Colow = colow;
+            m_Board = new char[row, colow];
             m_validMovesPlayer1 = new List<int>();
             m_validMovesPlayer2 = new List<int>();
 
-            newGame();
+            
         }
 
-        public static char GetLetter()
+        private static void GetLetters(int i_row,int i_colow)
         {
-          
+            
+            int size = ((i_row * i_colow)/2); 
             //returns a random letter.
             // ... Between 'A' and 'Z' inclusize.
-            int num = m_random.Next(0, 26); // Zero to 25
+            int num = m_random.Next(0, 23); // Zero to 25
             char let = (char)('A' + num);
-
-            if (m_MemoryLetters== null)
+            for (int j = 0; j<=size; j++)
             {
-                m_MemoryLetters = new List<char>();
-                m_MemoryLetters.Add(let);
-            }
-            else
-            {
-                
-                for (int i = 0; i < m_MemoryLetters.Count; i++)
+                bool is_Difreent = true;
+                if (m_MemoryLetters == null)
                 {
-                    if (m_MemoryLetters[i] == let)
+                    m_MemoryLetters = new List<char>();
+                    m_MemoryLetters.Add(let);
+                    
+                }
+                else
+                {
+
+                    for (int i = 0; i < m_MemoryLetters.Count; i++)
                     {
-                        let = (char)('A' + num);
-                        break;
+                        if (m_MemoryLetters[i] == let)
+                        {
+                            is_Difreent = false;     
+                        }
                     }
-                    else
+                    if (is_Difreent == true)
                     {
                         m_MemoryLetters.Add(let);
-                        break;
                     }
+                    num = m_random.Next(0, 24);
+                    let = (char)('A' + num);
+                    
                 }
             }
-            return let;
+            
         }
 
         private void newGame()// init bord
         {
-            int center = m_Size / 2;
+            List<char> newLetters = new List<char>();
+            GetLetters(m_Row, m_Colow);
 
-            for (int i = 0; i < m_Size; i++)
+            for (int i = 0; i < m_Row; i++)
             {
-                for (int j = 0; j < m_Size; j++)
+                for (int j = 0; j < m_Colow; j++)
                 {
-                    m_Board[i, j] = Board.GetLetter();
+                    if (m_MemoryLetters.Count > 0)
+                    {
+                        m_Board[i, j] = m_MemoryLetters[0];
+                        newLetters.Add(m_MemoryLetters[0]);
+                        m_MemoryLetters.RemoveAt(0);
+                    }
+                    else
+                    {
+                        if (newLetters.Count > 0)
+                        {
+                            m_Board[i, j] = newLetters[0];
+                            newLetters.RemoveAt(0);
+                        }
+                    }
+
                 }
             }
 
-            for (int i = 0; i < m_Size; i++)
+            //for (int i = 0; i < m_Size; i++)//drew the randow letters
+            //{
+            //    for (int j = 0; j < m_Size; j++)
+            //    {
+            //        Console.Write("  {0}  ",m_Board[i,j]);
+            //    }
+            //    Console.WriteLine();
+            //}
+        }
+        private void getTitleOfBoardBySize(int i_Colow)
+        {
+            string titleX4 = "     A   B   C   D  ";
+            string titleX6 = "     A   B   C   D   E   F  ";
+            
+
+            if (i_Colow ==4)
             {
-                for (int j = 0; j < m_Size; j++)
-                {
-                    Console.Write("  {0}  ",m_Board[i,j]);
-                }
-                Console.WriteLine();
+                Console.WriteLine(titleX4);
             }
+            else if (i_Colow == 6)
+            {
+                Console.WriteLine(titleX6);
+            }
+            
         }
 
+        private void getHlineOfBoardBySize(int i_Colow)
+        {
+            string HLINEX4 = "   =================";
+            string HLINEX6 = "   ========================";
+            
+            if (i_Colow==4)
+            {
+                Console.WriteLine(HLINEX4);
+            }
+            else if (i_Colow == 6)
+            {
+                Console.WriteLine(HLINEX6);
+            }
+            
+
+        }
+
+        private void drawBord()
+        {
+            
+            Ex02.ConsoleUtils.Screen.Clear();
+            getTitleOfBoardBySize(m_Colow);
+            for (int i = 0; i < m_Row; i++)
+            {
+                getHlineOfBoardBySize(m_Colow);
+                Console.Write(" " + (i + 1));
+
+
+                for (int j = 0; j < m_Colow; j++)
+                {
+                    Console.Write(" |");
+                    
+                        Console.Write(" {0}", m_Board[i, j]);
+                }
+                Console.WriteLine();
+                
+            }
+
+            getHlineOfBoardBySize(m_Colow);
+        }
         
 
         public static void Main()
         {
-            Board chack = new Board(4);
-            
-           
+            Board chack = new Board(6,6);
+            chack.newGame();
+            chack.getHlineOfBoardBySize(chack.Colow);
+            chack.drawBord();
+              
         }
 
         //        private bool isValidMove(int i_Color, int i_Rows, int i_Cols)//vaild move
