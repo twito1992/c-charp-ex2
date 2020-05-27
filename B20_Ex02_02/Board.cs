@@ -113,32 +113,36 @@ namespace B20_Ex02_02
             // ... Between 'A' and 'Z' inclusize.
             int num = m_random.Next(0, 23); // Zero to 25
             char let = (char)('A' + num);
-            for (int j = 0; j<=size; j++)
+            for (int j = 0; j<size; j++)
             {
-                bool is_Difreent = true;
+               
                 if (m_MemoryLetters == null)
                 {
                     m_MemoryLetters = new List<char>();
-                    m_MemoryLetters.Add(let);
-                    
+                    m_MemoryLetters.Add(let);   
                 }
                 else
                 {
+                    bool is_Difreent= true;
+                    do
+                    {
+                        is_Difreent = true;
+                        for (int i = 0; i < m_MemoryLetters.Count; i++)
+                            {
+                                if (m_MemoryLetters[i] == let)
+                                {
+                                    is_Difreent = false;
+                                }
+                            }
+                            if (is_Difreent == true)
+                            {
+                                m_MemoryLetters.Add(let);
+                            }
+                            num = m_random.Next(0, 24);
+                            let = (char)('A' + num);
 
-                    for (int i = 0; i < m_MemoryLetters.Count; i++)
-                    {
-                        if (m_MemoryLetters[i] == let)
-                        {
-                            is_Difreent = false;     
-                        }
-                    }
-                    if (is_Difreent == true)
-                    {
-                        m_MemoryLetters.Add(let);
-                    }
-                    num = m_random.Next(0, 24);
-                    let = (char)('A' + num);
-                    
+                        
+                    } while (is_Difreent == false);
                 }
             }
             
@@ -170,15 +174,6 @@ namespace B20_Ex02_02
 
                 }
             }
-
-            //for (int i = 0; i < m_Size; i++)//drew the randow letters
-            //{
-            //    for (int j = 0; j < m_Size; j++)
-            //    {
-            //        Console.Write("  {0}  ",m_Board[i,j]);
-            //    }
-            //    Console.WriteLine();
-            //}
         }
         private void getTitleOfBoardBySize(int i_Colow)
         {
