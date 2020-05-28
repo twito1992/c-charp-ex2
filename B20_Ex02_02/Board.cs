@@ -2,28 +2,25 @@
 using System.Collections.Generic;
 using System.Threading;
 
+
 namespace B20_Ex02_02
 {
     public class Board
     {
         private static List<char> m_MemoryLetters = null;
-        private int m_Player1Count = 0;//palyer 1 can move
-        private int m_Player2Count = 0;//player 2 can move
-        private int m_EmptyCount = 0;///empry move
-        private int m_Size = 0;
+        private int m_Player1Score = 0;
+        private int m_Player2Score = 0;
         private int m_Row = 0;
         private int m_Colow = 0;
         private char[,] m_Board = null;
+        private char[,] m_NewBoard = null;
         static Random m_random = new Random();
-        private List<int> m_validMovesPlayer1 = null;//vaild move player 1
-        private List<int> m_validMovesPlayer2 = null;//vaild move player 2
-
-        
+      
         public int Player1Count
         {
             get
             {
-                return m_Player1Count;
+                return m_Player1Score;
             }
         }
 
@@ -31,18 +28,10 @@ namespace B20_Ex02_02
         {
             get
             {
-                return m_Player2Count;
+                return m_Player2Score;
             }
         }
-
-        public int EmptyCount
-        {
-            get
-            {
-                return m_EmptyCount;
-            }
-        }
-
+        
         public char[,] BoardGame
         {
             get
@@ -53,19 +42,6 @@ namespace B20_Ex02_02
             set
             {
                 m_Board = value;
-            }
-        }
-
-        public int Size
-        {
-            get
-            {
-                return m_Size;
-            }
-
-            set
-            {
-                m_Size = value;
             }
         }
 
@@ -99,8 +75,7 @@ namespace B20_Ex02_02
             m_Row = row;
             m_Colow = colow;
             m_Board = new char[row, colow];
-            m_validMovesPlayer1 = new List<int>();
-            m_validMovesPlayer2 = new List<int>();
+            m_NewBoard = new char[row, colow];
 
             
         }
@@ -153,15 +128,16 @@ namespace B20_Ex02_02
             List<char> newLetters = new List<char>();
             GetLetters(m_Row, m_Colow);
 
+            List<char> temp = new List<char> (m_MemoryLetters);
             for (int i = 0; i < m_Row; i++)
             {
                 for (int j = 0; j < m_Colow; j++)
                 {
-                    if (m_MemoryLetters.Count > 0)
+                    if (temp.Count > 0)
                     {
-                        m_Board[i, j] = m_MemoryLetters[0];
-                        newLetters.Add(m_MemoryLetters[0]);
-                        m_MemoryLetters.RemoveAt(0);
+                        m_Board[i, j] = temp[0];
+                        newLetters.Add(temp[0]);
+                        temp.RemoveAt(0);
                     }
                     else
                     {
@@ -195,7 +171,7 @@ namespace B20_Ex02_02
         private void getHlineOfBoardBySize(int i_Colow)
         {
             string HLINEX4 = "   =================";
-            string HLINEX6 = "   ========================";
+            string HLINEX6 = "   =========================";
             
             if (i_Colow==4)
             {
@@ -209,9 +185,9 @@ namespace B20_Ex02_02
 
         }
 
-        private void drawBord()
+        private void drawBord()//TO CHACK BUILD BOARD WITH LETTERS
         {
-            
+            Thread.Sleep(2000);
             Ex02.ConsoleUtils.Screen.Clear();
             getTitleOfBoardBySize(m_Colow);
             for (int i = 0; i < m_Row; i++)
@@ -226,233 +202,102 @@ namespace B20_Ex02_02
                     
                         Console.Write(" {0}", m_Board[i, j]);
                 }
+                Console.Write(" |");
                 Console.WriteLine();
                 
             }
 
             getHlineOfBoardBySize(m_Colow);
         }
-        
+
+
+        private void userChose()
+        {
+            Ex02.ConsoleUtils.Screen.Clear();
+            
+            int userChoiceRows = 0;
+            int userChoiceColows = 0;
+            int firstUserChoiceRows = 0;
+            int firstUserChoiceColow = 0;
+            string userChoice;
+            for(int i =0; i < 2; i++)
+            {
+                drawChoseBord();
+                Console.WriteLine("Select a Place to put your chose (e.x F4):");
+                userChoice = Console.ReadLine();
+                if (userChoice[0] != 'Q')
+                {
+                    userChoiceRows = (userChoice[1] - '0') - 1;
+                    userChoiceColows = userChoice[0] - 'A';
+                    m_NewBoard[userChoiceRows, userChoiceColows] = m_Board[userChoiceRows, userChoiceColows];
+                    drawChoseBord();
+                }
+                if (i==0)
+                {
+                    firstUserChoiceColow = userChoiceColows;
+                    firstUserChoiceRows = userChoiceRows;
+                }
+            }
+            if (m_NewBoard[firstUserChoiceRows, firstUserChoiceColow] != m_NewBoard[userChoiceRows, userChoiceColows])
+                {
+                m_NewBoard[firstUserChoiceRows, firstUserChoiceColow] = '\0';
+                m_NewBoard[userChoiceRows, userChoiceColows] = '\0';
+                }
+            Thread.Sleep(2000);
+            
+        }
+        private void drawChoseBord()
+        {
+            //Thread.Sleep(2000);
+            Ex02.ConsoleUtils.Screen.Clear();
+            getTitleOfBoardBySize(m_Colow);
+            for (int i = 0; i < m_Row; i++)
+            {
+                getHlineOfBoardBySize(m_Colow);
+                Console.Write(" " + (i + 1));
+
+
+                for (int j = 0; j < m_Colow; j++)
+                {
+                    Console.Write(" |");
+                    Console.Write(" {0}", m_NewBoard[i, j]);
+                }
+                Console.Write(" |");
+                Console.WriteLine();
+
+            }
+
+            getHlineOfBoardBySize(m_Colow);
+        }
 
         public static void Main()
         {
-            Board chack = new Board(6,6);
+            int _row=4;
+            int _colow = 4;
+
+
+            Console.WriteLine("Enter row and colow: (row=4/6,colow=4/6)");
+            _row = Convert.ToInt32(Console.ReadLine());
+            _colow = Convert.ToInt32(Console.ReadLine());
+
+            while (((_row != 4)&&(_row != 6)) || ((_colow != 4)&&(_colow != 6)))
+            {
+                Console.WriteLine("Wrong input enter again: ");
+                _row = Convert.ToInt32(Console.ReadLine());
+                _colow = Convert.ToInt32(Console.ReadLine());
+            }
+            Board chack = new Board(_row,_colow);
             chack.newGame();
-            chack.getHlineOfBoardBySize(chack.Colow);
-            chack.drawBord();
-              
+            
+            Console.WriteLine("");
+            
+            chack.userChose();
+           
+            
+
+
+
         }
 
-        //        private bool isValidMove(int i_Color, int i_Rows, int i_Cols)//vaild move
-        //        {
-        //            bool validMove = false;
-
-        //            if (m_Board[i_Rows, i_Cols] == Board.sr_Empty)
-        //            {
-        //                for (int discRows = -1; discRows <= 1; discRows++)
-        //                {
-        //                    for (int discCols = -1; discCols <= 1; discCols++)
-        //                    {
-        //                        if (discCols != 0 || discRows != 0)
-        //                        {
-        //                            if (isValidPath(i_Color, i_Rows, i_Cols, discRows, discCols))
-        //                            {
-        //                                validMove = true;
-        //                            }
-        //                        }
-        //                    }
-        //                }
-        //            }
-
-        //            return validMove;
-        //        }
-
-        //        //private bool isValidPath(int i_Color, int i_Rows, int i_Cols, int i_DiscRows, int i_DiscCols)
-        //        //{
-        //        //    int rows = i_Rows + i_DiscRows;
-        //        //    int cols = i_Cols + i_DiscCols;
-        //        //    bool validPath = true;
-
-        //        //    while (rows >= 0 && rows < m_Size && cols >= 0 && cols < m_Size && m_Board[rows, cols] == -i_Color)
-        //        //    {
-        //        //        rows += i_DiscRows;
-        //        //        cols += i_DiscCols;
-        //        //    }
-
-        //        //    if (rows < 0 || rows > m_Size - 1 || cols < 0 || cols > m_Size - 1 ||
-        //        //        (rows - i_DiscRows == i_Rows && cols - i_DiscCols == i_Cols)
-        //        //        || m_Board[rows, cols] != i_Color)
-        //        //    {
-        //        //        validPath = false;
-        //        //    }
-
-        //        //    return validPath;
-        //        //}
-
-        //        public void GetValidMoves(int i_Color)//cahck move
-        //        {
-        //            if (i_Color == Board.sr_Black)
-        //            {
-        //                m_validMovesBlack.Clear();
-        //            }
-        //            else if (i_Color == Board.sr_White)
-        //            {
-        //                m_validMovesWhite.Clear();
-        //            }
-
-        //            for (int rows = 0; rows < m_Size; rows++)
-        //            {
-        //                for (int cols = 0; cols < m_Size; cols++)
-        //                {
-        //                    if (isValidMove(i_Color, rows, cols))
-        //                    {
-        //                        if (i_Color == Board.sr_Black)
-        //                        {
-        //                            m_validMovesBlack.Add((rows * 10) + cols);
-        //                        }
-        //                        else if (i_Color == Board.sr_White)
-        //                        {
-        //                            m_validMovesWhite.Add((rows * 10) + cols);
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //        }
-
-        //        public int GetNumberOfValidMoves(int i_Color)
-        //        {
-        //            int totalMoves = 0;
-
-        //            if (i_Color == Board.sr_Black)
-        //            {
-        //                totalMoves = m_validMovesBlack.Count;
-        //            }
-        //            else if (i_Color == Board.sr_White)
-        //            {
-        //                totalMoves = m_validMovesWhite.Count;
-        //            }
-
-        //            return totalMoves;
-        //        }
-
-        //        public bool HasAnyValidMove(int i_Color)
-        //        {
-        //            int totalMoves = 0;
-
-        //            if (i_Color == Board.sr_Black)
-        //            {
-        //                totalMoves = m_validMovesBlack.Count;
-        //            }
-        //            else if (i_Color == Board.sr_White)
-        //            {
-        //                totalMoves = m_validMovesWhite.Count;
-        //            }
-
-        //            return totalMoves > 0;
-        //        }
-
-        //        public bool IfValidMove(int i_Color, int i_Rows, int i_Cols)
-        //        {
-        //            bool valid = false;
-        //            int checkIndex = 0;
-
-        //            GetValidMoves(i_Color);
-        //            checkIndex = (i_Rows * 10) + i_Cols;
-        //            if (i_Color == Board.sr_Black)
-        //            {
-        //                for (int i = 0; i < m_validMovesBlack.Count; i++)
-        //                {
-        //                    if (m_validMovesBlack[i] == checkIndex)
-        //                    {
-        //                        valid = true;
-        //                    }
-        //                }
-        //            }
-        //            else if (i_Color == Board.sr_White)
-        //            {
-        //                for (int i = 0; i < m_validMovesWhite.Count; i++)
-        //                {
-        //                    if (m_validMovesWhite[i] == checkIndex)
-        //                    {
-        //                        valid = true;
-        //                    }
-        //                }
-        //            }
-
-        //            return valid;
-        //        }
-
-        //        public void MakeMove(int i_Color, int i_Rows, int i_Cols)
-        //        {
-        //            int discRows, discCols;
-        //            int rows, cols;
-
-        //            m_Board[i_Rows, i_Cols] = i_Color;
-        //            for (discRows = -1; discRows <= 1; discRows++)
-        //            {
-        //                for (discCols = -1; discCols <= 1; discCols++)
-        //                {
-        //                    if (!(discRows == 0 && discCols == 0) && isValidPath(i_Color, i_Rows, i_Cols, discRows, discCols))
-        //                    {
-        //                        rows = i_Rows + discRows;
-        //                        cols = i_Cols + discCols;
-        //                        while (m_Board[rows, cols] == -i_Color)
-        //                        {
-        //                            m_Board[rows, cols] = i_Color;
-        //                            rows += discRows;
-        //                            cols += discCols;
-        //                        }
-        //                    }
-        //                }
-        //            }
-
-        //            updateGameValues();
-        //        }
-
-        //        private void updateGameValues()
-        //        {
-        //            m_Player1Count = 0;
-        //            m_Player2Count = 0;
-        //            m_EmptyCount = 0;
-
-        //            for (int rows = 0; rows < m_Size; rows++)
-        //            {
-        //                for (int cols = 0; cols < m_Size; cols++)
-        //                {
-        //                    if (m_Board[rows, cols] == Board.sr_Black)
-        //                    {
-        //                        m_Player1Count++;
-        //                    }
-        //                    else if (m_Board[rows, cols] == Board.sr_White)
-        //                    {
-        //                        m_Player2Count++;
-        //                    }
-        //                    else
-        //                    {
-        //                        m_EmptyCount++;
-        //                    }
-        //                }
-        //            }
-        //        }
-
-        //        public void ComputerMakeMove(int i_Color)
-        //        {
-        //            int bestOption = 0;
-        //            int rows = 0;
-        //            int cols = 0;
-        //            m_ArtificialIntelligence = new ArtificialIntelligence(this);
-        //            if (i_Color == Board.sr_Black)
-        //            {
-        //                bestOption = m_ArtificialIntelligence.GetBestOption(m_validMovesBlack);
-        //            }
-        //            else if (i_Color == Board.sr_White)
-        //            {
-        //                bestOption = m_ArtificialIntelligence.GetBestOption(m_validMovesWhite);
-        //            }
-
-        //            rows = bestOption / 10;
-        //            cols = bestOption % 10;
-        //            MakeMove(i_Color, rows, cols);
-        //        }
     }
 }
