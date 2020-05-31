@@ -7,61 +7,71 @@ namespace B20_Ex02_02
 {
     public class UserInterface
     {
-        gameMenu();
-    }
-    
+        private bool m_gameRunning = true;
+        private Board m_board = null;
+        private Player m_player = new Player();
 
-    private void gameMenu()
-    {
+        public UserInterface()
+        {
+            GameMenu();
+        }
 
-        int userChoiceSizeOfBoard = 0;
+        private void GameMenu()
+        {
+            int m_userChoiceSizeOfBoard = 0;
+            WelcomePrint();
+            Ex02.ConsoleUtils.Screen.Clear();
+        }
 
-        welcomePrint();
-        Ex02.ConsoleUtils.Screen.Clear();
-        m_Player.PlayerOneName = getNameFromClient(1);
-        Ex02.ConsoleUtils.Screen.Clear();
-        getDecisionAgainstWhoToPlay();
-        Ex02.ConsoleUtils.Screen.Clear();
-        userChoiceSizeOfBoard = getDecisionAboutTheSizeOfBoard();
-        startGame(userChoiceSizeOfBoard);
-    }
-}
-        
+        private void WelcomePrint()
+        {
+            string TitleText = null;
 
-    private void welcomePrint()
-    {
-    string TitleText = null;
-
-    TitleText = @"
-============================
-============================
-       MEMORY GAME
-============================
-============================
+            TitleText = @"
+=============================
+=============================
+      ~~ MEMORY GAME ~~
+=============================
+=============================
            by MOR TWITO and ORTAL CHIFRUT                     
                 (press any key to play)               
 ";
+            Console.Title = "Memory Game by MOR TWITO and ORTAL CHIFRUT";
+            Console.WriteLine(TitleText);
+            Console.ReadKey();
+        }
+        
 
-    Console.Title = "Memory Game by MOR TWITO and ORTAL CHIFRUT";
-    Console.WriteLine(TitleText);
-    Console.ReadKey();
+        private void getDecideAgainstWhoToPlay()
+        {
+            string userChoice = null;
+            StringBuilder msgToPlayer = new StringBuilder();
+
+            msgToPlayer.AppendLine("hello " + m_player.firstPlayerName);
+            msgToPlayer.AppendLine("Who would you like to play with");
+            msgToPlayer.AppendLine("Press 1 for Computer");
+            msgToPlayer.AppendLine("Press 2 for another player");
+            Console.Write(msgToPlayer);
+            userChoice = Console.ReadLine();
+            while (userChoice != "1" && userChoice != "2")
+            {
+                Ex02.ConsoleUtils.Screen.Clear();
+                Console.Write(msgToPlayer);
+                Console.WriteLine("-------------------------------");
+                Console.WriteLine("Please press only 1 or 2");
+                userChoice = Console.ReadLine();
+            }
+
+            if (userChoice == "1")
+            {
+                m_player.playWithComputer = true;
+                m_player.secondPlayerName = "Computer";
+            }
+            else
+            {
+                m_player.secondPlayerName = GetPlayerName(2);
+            }
+        }
     }
-
-
-private string getNameFromClient(int i_PlayerNumber)
-{
-    string nameFromClient;
-
-    Console.WriteLine("Player" + i_PlayerNumber + " Please enter your name: ");
-    nameFromClient = Console.ReadLine();
-    while (nameFromClient.Length < 2)
-    {
-        Ex02.ConsoleUtils.Screen.Clear();
-        Console.WriteLine("Bad Name (Name Required at least 2 lettars)");
-        Console.WriteLine("Player" + i_PlayerNumber + " Please enter your name: ");
-        nameFromClient = Console.ReadLine();
-    }
-
-    return nameFromClient;
 }
-}
+

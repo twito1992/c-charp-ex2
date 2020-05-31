@@ -8,8 +8,8 @@ namespace B20_Ex02_02
 {
     class Player
     {
-        private string m_playerName; //שם השחקן 
-        private int m_playerScore; //ניקוד השחקן
+        private string m_playerName;  
+        private int m_playerScore; 
        // private char m_playerChoise; //בחירת המשבצת של השחקן- לא בטוחה שזה צריך להיות במחלקה הזאת
 
         public Player(string i_PlayerName)
