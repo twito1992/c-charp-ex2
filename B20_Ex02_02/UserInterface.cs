@@ -7,9 +7,13 @@ namespace B20_Ex02_02
 {
     public class UserInterface
     {
-        private bool m_gameRunning = true;
+        
         private Board m_board = null;
-        private Player m_player = new Player();
+        private Player m_player1;
+        private Player m_player2;
+        private bool m_playWithComputer = true;
+
+        
 
         public UserInterface()
         {
@@ -18,9 +22,23 @@ namespace B20_Ex02_02
 
         private void GameMenu()
         {
-            int m_userChoiceSizeOfBoard = 0;
+            
             WelcomePrint();
+            Thread.Sleep(2000);
             Ex02.ConsoleUtils.Screen.Clear();
+            startGame();
+        }
+
+        private void startGame()
+        {
+            Console.WriteLine("Enter player 1 name: ");
+            m_player1 = new Player(Console.ReadLine());
+            getDecideAgainstWhoToPlay();
+            m_board = new Board();
+            
+            m_board.PlayGameBoard(m_player1.GetPlayerName(),m_player2.GetPlayerName());
+            
+   
         }
 
         private void WelcomePrint()
@@ -44,10 +62,11 @@ namespace B20_Ex02_02
 
         private void getDecideAgainstWhoToPlay()
         {
-            string userChoice = null;
-            StringBuilder msgToPlayer = new StringBuilder();
 
-            msgToPlayer.AppendLine("hello " + m_player.firstPlayerName);
+            string userChoice;
+            StringBuilder msgToPlayer = new StringBuilder();
+          
+            msgToPlayer.AppendLine("hello " + m_player1.GetPlayerName());
             msgToPlayer.AppendLine("Who would you like to play with");
             msgToPlayer.AppendLine("Press 1 for Computer");
             msgToPlayer.AppendLine("Press 2 for another player");
@@ -64,14 +83,20 @@ namespace B20_Ex02_02
 
             if (userChoice == "1")
             {
-                m_player.playWithComputer = true;
-                m_player.secondPlayerName = "Computer";
+                m_player2 = new Player("Computer");
+                
             }
             else
             {
-                m_player.secondPlayerName = GetPlayerName(2);
+                m_playWithComputer = false;
+                Console.WriteLine("Enter player 2 name: ");
+                m_player2 = new Player(Console.ReadLine());
             }
         }
+
+       
+
+
     }
 }
 

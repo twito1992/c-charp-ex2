@@ -37,8 +37,12 @@
   <ItemGroup>
     <Compile Include="Board.cs" />
     <Compile Include="Player.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="UserInterface.cs" />
+    <Compile Include="Program.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="UserInterface.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Ex02.ConsoleUtils">

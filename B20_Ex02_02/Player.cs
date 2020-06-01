@@ -8,40 +8,51 @@ namespace B20_Ex02_02
 {
     class Player
     {
-        private string m_playerName;  
-        private int m_playerScore; 
-       // private char m_playerChoise; //בחירת המשבצת של השחקן- לא בטוחה שזה צריך להיות במחלקה הזאת
+        private string m_playerName;
+        private int m_playerScore;
+
+        
+        public Player()
+        {
+            m_playerScore = 0;
+            m_playerName = null;
+        }
+
 
         public Player(string i_PlayerName)
         {
-            this.m_playerName = i_PlayerName;
+            m_playerName = i_PlayerName;
             m_playerScore = 0;
         }
         public string GetPlayerName()
         {
-            return this.m_playerName;
+            return m_playerName;
         }
 
         public void SetPlayerName(string i_PlayerName)
         {
-            this.m_playerName = i_PlayerName;
+            m_playerName = i_PlayerName;
         }
         public void SetScorePlayer(int i_PlayerScore)
         {
-            this.m_playerScore = i_PlayerScore;
+            m_playerScore = i_PlayerScore;
         }
         public int GetScorePlayer()
         {
-            return this.m_playerScore;
+            return m_playerScore;
         }
-        /*  public void SetPlayerChoise(char i_PlayerChoice)
-          {
-              this.playerChoice = PlayerChoice;
-          }
 
-          public char GetPlayerChoice()
-          {
-              return this.playerChoice;
-          }*/
+        public int Score
+        {
+            set
+            {
+                m_playerScore = value;
+            }
+            get
+            {
+                return m_playerScore;
+            }
+
+        }
     }
 }
